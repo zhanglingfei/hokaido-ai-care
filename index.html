@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灾害时要配慮者ケア支援AI系统</title>
+    <style>
+        :root {
+            --primary: #2c6cb0;
+            --secondary: #4299e1;
+            --success: #48bb78;
+            --light: #f7fafc;
+            --dark: #2d3748;
+            --danger: #f56565;
+            --warning: #ed8936;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic Pro', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f5f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #e2e8f0;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(44, 108, 176, 0.8), rgba(44, 108, 176, 0.8)), url('/api/placeholder/1200/600') center/cover;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #38a169;
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            margin-left: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .features {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #718096;
+        }
+        
+        .feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--light);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .how-it-works {
+            background-color: #edf2f7;
+            padding: 4rem 0;
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 250px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .login-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+        }
+        
+        .btn-login {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: #2b6cb0;
+        }
+        
+        .help-text {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .help-text a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: #2d3748;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: #a0aec0;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid, .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-card, .step {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="/api/placeholder/50/50" alt="災害時ケア支援システムロゴ">
+                <h1>災害時要配慮者ケア支援AI</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">特徴</a></li>
+                    <li><a href="#how-it-works">使い方</a></li>
+                    <li><a href="#login">ログイン</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>災害時の要配慮者ケアを<br>AIがサポート</h1>
+            <p>避難所運営者向けに、妊婦や乳幼児などの要配慮者への適切なケア方法を提供するAIシステムです。内閣府や医療機関の信頼性の高い情報を基に、迅速かつ正確な支援情報を提供します。</p>
+            <a href="#login" class="btn btn-primary">今すぐ利用する</a>
+            <a href="#how-it-works" class="btn btn-secondary">詳しく見る</a>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>システムの特徴</h2>
+                <p>災害時に非医療従事者が適切なケアを提供できるよう設計された支援システムです</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">AI</div>
+                    <h3>AIによる質問回答</h3>
+                    <p>内閣府や医療機関の資料を基にした信頼性の高いAIが、質問に適切に回答します。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">UI</div>
+                    <h3>簡単な操作性</h3>
+                    <p>緊急時でも迷わず使えるシンプルで直感的なインターフェースを提供します。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">DB</div>
+                    <h3>信頼性の高い情報</h3>
+                    <p>国や医療機関が提供する公式資料を基にした、信頼できる情報を提供します。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>使い方</h2>
+                <p>簡単3ステップで必要な情報にアクセスできます</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>ログイン</h3>
+                    <p>システムにログインして、サービスにアクセスします。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>質問入力</h3>
+                    <p>ケアに関する質問を入力します。音声入力も可能です。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>回答確認</h3>
+                    <p>AIが提供する回答と参考情報を確認し、適切なケアを行います。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="login-section" id="login">
+        <div class="container">
+            <div class="section-title">
+                <h2>ログイン</h2>
+                <p>アカウント情報を入力してシステムにアクセスしてください</p>
+            </div>
+            <div class="login-container">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">ユーザーID</label>
+                        <input type="text" id="username" class="form-control" placeholder="ユーザーIDを入力">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" class="form-control" placeholder="パスワードを入力">
+                    </div>
+                    <button type="submit" class="btn-login">ログイン</button>
+                </form>
+                <div class="help-text">
+                    <p>アカウントをお持ちでない方は、<a href="#register">こちら</a>から登録できます。</p>
+                    <p>パスワードをお忘れの方は、<a href="#reset">こちら</a>からリセットできます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#about">本システムについて</a>
+                <a href="#terms">利用規約</a>
+                <a href="#privacy">プライバシーポリシー</a>
+                <a href="#contact" id="contact">お問い合わせ</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025-2027 北海道大学病院 災害時要配慮者ケア支援システム開発チーム
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // 実際のシステムでは適切な認証処理を行う
+            // ここではデモのため、ダッシュボードページに遷移する
+            if (username && password) {
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('ユーザーIDとパスワードを入力してください。');
+            }
+        });
+        
+        // 「今すぐ利用する」ボタンからもdashboardへ移動できるようにする
+        document.querySelectorAll('.btn-primary').forEach(function(btn) {
+            if (btn.textContent.includes('今すぐ利用する')) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'dashboard.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
